@@ -18,6 +18,23 @@ class AbsenceRecordsState extends Equatable {
       this.records = const [],
       this.hasError = false});
 
+  AbsenceRecordsState copyWith(
+      {int? visibleRecordsCount,
+      int? allRecordsCount,
+      String? dateFilter,
+      AbsenceStatusType? statusFilter,
+      List<AbsenceState>? records,
+      bool? hasError}) {
+    return AbsenceRecordsState(
+      visibleRecordsCount: visibleRecordsCount ?? this.visibleRecordsCount,
+      allRecordsCount: allRecordsCount ?? this.allRecordsCount,
+      dateFilter: dateFilter ?? this.dateFilter,
+      statusFilter: statusFilter ?? this.statusFilter,
+      records: records ?? this.records,
+      hasError: hasError ?? this.hasError,
+    );
+  }
+
   @override
   List<Object?> get props => [
         visibleRecordsCount,
