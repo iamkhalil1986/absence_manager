@@ -1,0 +1,167 @@
+{
+  "uuid": "99b0f97f-de2b-4c9a-85d3-522639afd9ba",
+  "lastMigration": 33,
+  "name": "Crewmeister",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "1ad2f514-944d-4965-aab9-b3099b3b022d",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "members",
+      "responses": [
+        {
+          "uuid": "831c6a28-92e1-4032-9cb5-d6adc3209803",
+          "body": "{\n  \"message\": \"Success\",\n  \"payload\": [\n    {\n      \"crewId\": 352,\n      \"id\": 709,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Max\",\n      \"userId\": 644\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 713,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Ines\",\n      \"userId\": 649\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 2245,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Monika\",\n      \"userId\": 2290\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 2650,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Mike\",\n      \"userId\": 2664\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 2778,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Bernhard\",\n      \"userId\": 2796\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 2950,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Manuel\",\n      \"userId\": 2735\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 5876,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Daniel\",\n      \"userId\": 5293\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 7111,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Sandra\",\n      \"userId\": 5192\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 8442,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Linda\",\n      \"userId\": 8007\n    },\n    {\n      \"crewId\": 352,\n      \"id\": 9364,\n      \"image\": \"https://loremflickr.com/300/400\",\n      \"name\": \"Marlene\",\n      \"userId\": 8447\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "8aacc4ef-8320-4f4a-b5ae-09eefde5c8e3",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "absences",
+      "responses": [
+        {
+          "uuid": "1eabe3dc-3c10-41e6-a1a8-cbc5671459c6",
+          "body": "{\n  \"message\": \"Success\",\n  \"payload\": [\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2020-12-12T18:03:55.000+01:00\",\n      \"createdAt\": \"2020-12-12T14:17:01.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-01-13\",\n      \"id\": 2351,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-01-13\",\n      \"type\": \"sickness\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"Sorry\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-01-03T17:36:52.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-01-05\",\n      \"id\": 2521,\n      \"memberNote\": \"ganzer tag\",\n      \"rejectedAt\": \"2021-01-03T17:39:50.000+01:00\",\n      \"startDate\": \"2021-01-05\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-01-09T18:43:29.000+01:00\",\n      \"createdAt\": \"2021-01-09T17:45:47.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-01-11\",\n      \"id\": 2634,\n      \"memberNote\": \"Nachmittag 0,5 Tage. Danke.\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-01-11\",\n      \"type\": \"vacation\",\n      \"userId\": 649\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-01-25T10:04:51.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-02-06\",\n      \"id\": 2904,\n      \"memberNote\": \"\",\n      \"rejectedAt\": \"2021-01-25T10:14:44.000+01:00\",\n      \"startDate\": \"2021-02-02\",\n      \"type\": \"vacation\",\n      \"userId\": 5293\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-01-27T17:35:03.000+01:00\",\n      \"createdAt\": \"2021-01-25T11:06:19.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-11\",\n      \"id\": 2909,\n      \"memberNote\": \"Urlaub\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-02-23\",\n      \"type\": \"vacation\",\n      \"userId\": 5192\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-01-27T17:34:25.000+01:00\",\n      \"createdAt\": \"2021-01-27T15:52:59.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-02-03\",\n      \"id\": 2942,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-02-03\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-01-27T17:34:31.000+01:00\",\n      \"createdAt\": \"2021-01-27T15:53:23.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-03\",\n      \"id\": 2943,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-03\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-05T09:31:55.000+01:00\",\n      \"createdAt\": \"2021-01-30T10:24:36.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-04-07\",\n      \"id\": 2955,\n      \"memberNote\": \"Uni: Blockpraktikum\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-27\",\n      \"type\": \"vacation\",\n      \"userId\": 2735\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-02-14T12:02:07.000+01:00\",\n      \"createdAt\": \"2021-02-14T11:32:56.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-02-16\",\n      \"id\": 3229,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-02-16\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"Leider sind Wolfram und Phillip schon im Urlaub. Geh lieber mal im März\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-02-14T15:41:26.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-02-25\",\n      \"id\": 3235,\n      \"memberNote\": \"Skiurlaub\",\n      \"rejectedAt\": \"2021-02-14T15:43:06.000+01:00\",\n      \"startDate\": \"2021-02-20\",\n      \"type\": \"sickness\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-02-17T13:52:26.000+01:00\",\n      \"createdAt\": \"2021-02-17T13:19:37.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-02-27\",\n      \"id\": 3269,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-02-27\",\n      \"type\": \"vacation\",\n      \"userId\": 2796\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-02-24T13:30:38.000+01:00\",\n      \"createdAt\": \"2021-02-24T13:24:54.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-02-27\",\n      \"id\": 3383,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-02-27\",\n      \"type\": \"vacation\",\n      \"userId\": 5293\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-01T10:26:10.000+01:00\",\n      \"createdAt\": \"2021-03-01T09:56:26.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-31\",\n      \"id\": 3452,\n      \"memberNote\": \"Den alten Urlaubsantrag vom 29.03.2017 - 31.03.2017 bitte löschen.\\nDanke :)\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-30\",\n      \"type\": \"vacation\",\n      \"userId\": 2796\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"Viel Spaß\",\n      \"confirmedAt\": \"2021-03-09T17:06:46.000+01:00\",\n      \"createdAt\": \"2021-03-09T15:01:46.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-13\",\n      \"id\": 3597,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-13\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-09T15:33:35.000+01:00\",\n      \"createdAt\": \"2021-03-09T15:33:35.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-10\",\n      \"id\": 3600,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-10\",\n      \"type\": \"vacation\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-09T15:33:57.000+01:00\",\n      \"createdAt\": \"2021-03-09T15:33:57.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-10\",\n      \"id\": 3601,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-10\",\n      \"type\": \"vacation\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": 709,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-09T15:34:57.000+01:00\",\n      \"createdAt\": \"2021-03-09T15:34:57.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-13\",\n      \"id\": 3604,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-13\",\n      \"type\": \"vacation\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": 709,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-09T15:35:17.000+01:00\",\n      \"createdAt\": \"2021-03-09T15:35:17.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-15\",\n      \"id\": 3605,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-14\",\n      \"type\": \"sickness\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-09T15:35:58.000+01:00\",\n      \"createdAt\": \"2021-03-09T15:35:58.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-18\",\n      \"id\": 3606,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-16\",\n      \"type\": \"vacation\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-09T19:16:51.000+01:00\",\n      \"createdAt\": \"2021-03-09T19:16:51.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-13\",\n      \"id\": 3618,\n      \"memberNote\": \"Test\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-13\",\n      \"type\": \"vacation\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-14T15:34:59.000+01:00\",\n      \"createdAt\": \"2021-03-10T09:19:42.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-06-16\",\n      \"id\": 3629,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-06-14\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"Works nicely!\",\n      \"confirmedAt\": \"2021-03-10T19:37:38.000+01:00\",\n      \"createdAt\": \"2021-03-10T19:37:23.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-11\",\n      \"id\": 3656,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-11\",\n      \"type\": \"vacation\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"Viel Spaß!\",\n      \"confirmedAt\": \"2021-03-14T17:00:59.000+01:00\",\n      \"createdAt\": \"2021-03-14T09:32:42.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-13\",\n      \"id\": 3690,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-03-13\",\n      \"type\": \"sickness\",\n      \"userId\": 2796\n    },\n    {\n      \"admitterId\": 709,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-21T18:29:49.000+01:00\",\n      \"createdAt\": \"2021-03-15T14:54:31.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-04-22\",\n      \"id\": 3748,\n      \"memberNote\": \"Barcamp Salzburg\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-04-21\",\n      \"type\": \"vacation\",\n      \"userId\": 649\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-15T16:36:34.000+01:00\",\n      \"createdAt\": \"2021-03-15T16:36:34.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-01-02\",\n      \"id\": 3752,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2020-12-31\",\n      \"type\": \"vacation\",\n      \"userId\": 644\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-03-21T09:20:57.000+01:00\",\n      \"createdAt\": \"2021-03-20T22:18:53.000+01:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-09-11\",\n      \"id\": 3884,\n      \"memberNote\": \"Sommerurlaub\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-08-24\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-03-26T23:52:11.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-03-27\",\n      \"id\": 4101,\n      \"memberNote\": \"\",\n      \"rejectedAt\": \"2021-03-27T08:18:32.000+02:00\",\n      \"startDate\": \"2021-03-27\",\n      \"type\": \"vacation\",\n      \"userId\": 5293\n    },\n    {\n      \"admitterId\": 709,\n      \"admitterNote\": \"1\",\n      \"confirmedAt\": \"2021-04-08T16:14:23.000+02:00\",\n      \"createdAt\": \"2021-04-07T16:45:28.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-04-11\",\n      \"id\": 4462,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-04-11\",\n      \"type\": \"sickness\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"1\",\n      \"confirmedAt\": \"2021-04-08T21:16:26.000+02:00\",\n      \"createdAt\": \"2021-04-08T20:12:29.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-04-12\",\n      \"id\": 4470,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-04-12\",\n      \"type\": \"vacation\",\n      \"userId\": 5293\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-04-11T08:24:06.000+02:00\",\n      \"createdAt\": \"2021-04-09T21:17:12.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-04-26\",\n      \"id\": 4471,\n      \"memberNote\": \"bitte den urlaub in der vorwoche  17-21 zurückziehen. merci :)\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-04-24\",\n      \"type\": \"vacation\",\n      \"userId\": 2796\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-04-19T14:35:11.000+02:00\",\n      \"createdAt\": \"2021-04-19T11:20:48.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-07-28\",\n      \"id\": 4626,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-07-10\",\n      \"type\": \"vacation\",\n      \"userId\": 8447\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"Schönes langes WE!\",\n      \"confirmedAt\": \"2021-04-26T15:12:11.000+02:00\",\n      \"createdAt\": \"2021-04-26T09:55:40.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-04-28\",\n      \"id\": 4753,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-04-28\",\n      \"type\": \"vacation\",\n      \"userId\": 649\n    },\n    {\n      \"admitterId\": 709,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-05-12T09:27:30.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-06-26\",\n      \"id\": 5291,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-06-26\",\n      \"type\": \"sickness\",\n      \"userId\": 8007\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-05-12T10:18:50.000+02:00\",\n      \"createdAt\": \"2021-05-12T09:43:25.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-06-23\",\n      \"id\": 5293,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-06-19\",\n      \"type\": \"vacation\",\n      \"userId\": 2796\n    },\n    {\n      \"admitterId\": 709,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-05-16T10:50:30.000+02:00\",\n      \"createdAt\": \"2021-05-16T10:50:30.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-05-18\",\n      \"id\": 5409,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-05-18\",\n      \"type\": \"vacation\",\n      \"userId\": 2796\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-05-22T08:50:28.000+02:00\",\n      \"createdAt\": \"2021-05-21T17:24:42.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-05-24\",\n      \"id\": 5555,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-05-24\",\n      \"type\": \"vacation\",\n      \"userId\": 5293\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-05-26T16:52:41.000+02:00\",\n      \"createdAt\": \"2021-05-26T16:05:37.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-05-30\",\n      \"id\": 5740,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-05-30\",\n      \"type\": \"vacation\",\n      \"userId\": 2796\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-05-29T08:42:59.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-06-30\",\n      \"id\": 5769,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-06-26\",\n      \"type\": \"vacation\",\n      \"userId\": 2664\n    },\n    {\n      \"admitterId\": 709,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-05-31T08:55:37.000+02:00\",\n      \"createdAt\": \"2021-05-30T16:33:57.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-08-20\",\n      \"id\": 5879,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-08-05\",\n      \"type\": \"sickness\",\n      \"userId\": 8007\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": \"2021-06-13T07:51:28.000+02:00\",\n      \"createdAt\": \"2021-06-12T15:21:08.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-06-27\",\n      \"id\": 6310,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-06-26\",\n      \"type\": \"vacation\",\n      \"userId\": 5293\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-06-12T15:21:16.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-06-29\",\n      \"id\": 6311,\n      \"memberNote\": \"\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-06-29\",\n      \"type\": \"vacation\",\n      \"userId\": 5293\n    },\n    {\n      \"admitterId\": null,\n      \"admitterNote\": \"\",\n      \"confirmedAt\": null,\n      \"createdAt\": \"2021-06-30T02:13:56.000+02:00\",\n      \"crewId\": 352,\n      \"endDate\": \"2021-08-12\",\n      \"id\": 6886,\n      \"memberNote\": \"Pfadfindersommerlager\",\n      \"rejectedAt\": null,\n      \"startDate\": \"2021-08-05\",\n      \"type\": \"vacation\",\n      \"userId\": 2735\n    }\n  ]\n}",
+          "latency": 2000,
+          "statusCode": 200,
+          "label": "With Absentees",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "cf014870-b93e-4f7a-bb9f-24810d90178b",
+          "body": "{\n  \"message\": \"Success\",\n  \"payload\": []\n}",
+          "latency": 2000,
+          "statusCode": 200,
+          "label": "Without Absentees",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "e4befd0f-4828-491d-b58e-84aa0468efcb",
+          "body": "",
+          "latency": 0,
+          "statusCode": 500,
+          "label": "Service Error",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "1ad2f514-944d-4965-aab9-b3099b3b022d"
+    },
+    {
+      "type": "route",
+      "uuid": "8aacc4ef-8320-4f4a-b5ae-09eefde5c8e3"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}
