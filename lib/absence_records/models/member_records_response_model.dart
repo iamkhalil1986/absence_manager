@@ -13,4 +13,4 @@ class MemberRecordsResponseModel extends ResponseModel {
   List<Object?> get props => [memberRecords];
 }
 
-class MemberRecordsServiceErrorResponseModel extends ResponseModel {}
+class MemberRecordsErrorResponseModel extends ResponseModel {}

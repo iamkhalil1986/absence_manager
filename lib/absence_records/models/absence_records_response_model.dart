@@ -14,7 +14,7 @@ class AbsenceRecordsResponseModel extends ResponseModel {
 }
 
 // This approach of handling error is very useful when dealing with multiple error scenarios
-class AbsenceRecordsServiceErrorResponseModel extends ResponseModel {}
+class AbsenceRecordsErrorResponseModel extends ResponseModel {}
 
 //For Example 409 conflict error statusCode with different messageCode.
 //statusCode = 409, messageCode="LIMIT_EXCEEDED"

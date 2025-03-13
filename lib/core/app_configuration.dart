@@ -1,3 +1,3 @@
 class AppConfiguration {
-  static String baseURL = "http://localhost:3000/";
+  static String baseURL = "localhost:3000";
 }
