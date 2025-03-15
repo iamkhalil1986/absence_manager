@@ -3,36 +3,43 @@ import 'package:absence_manager/absence_records/bloc/absence_state.dart';
 import 'package:equatable/equatable.dart';
 
 class AbsenceRecordsState extends Equatable {
-  final int visibleRecordsCount;
-  final int allRecordsCount;
+  final int currentAbsenceRecordsCount;
+  final int totalAbsenceRecordsCount;
   final String? dateFilter;
   final AbsenceStatusType? statusFilter;
   final List<AbsenceState> records;
 
   const AbsenceRecordsState(
-      {this.visibleRecordsCount = 0,
-      this.allRecordsCount = 0,
+      {this.currentAbsenceRecordsCount = 0,
+      this.totalAbsenceRecordsCount = 0,
       this.dateFilter,
       this.statusFilter,
       this.records = const []});
 
   AbsenceRecordsState copyWith(
-      {int? visibleRecordsCount,
-      int? allRecordsCount,
+      {int? currentAbsenceRecordsCount,
+      int? totalAbsenceRecordsCount,
       String? dateFilter,
       AbsenceStatusType? statusFilter,
       List<AbsenceState>? records}) {
     return AbsenceRecordsState(
-        visibleRecordsCount: visibleRecordsCount ?? this.visibleRecordsCount,
-        allRecordsCount: allRecordsCount ?? this.allRecordsCount,
+        currentAbsenceRecordsCount:
+            currentAbsenceRecordsCount ?? this.currentAbsenceRecordsCount,
+        totalAbsenceRecordsCount:
+            totalAbsenceRecordsCount ?? this.totalAbsenceRecordsCount,
         dateFilter: dateFilter ?? this.dateFilter,
         statusFilter: statusFilter ?? this.statusFilter,
         records: records ?? this.records);
   }
 
   @override
-  List<Object?> get props =>
-      [visibleRecordsCount, allRecordsCount, dateFilter, statusFilter, records];
+  List<Object?> get props => [
+        currentAbsenceRecordsCount,
+        totalAbsenceRecordsCount,
+        dateFilter,
+        statusFilter,
+        records
+      ];
 }
 
 class AbsenceRecordsLoadingState extends AbsenceRecordsState {}

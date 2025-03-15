@@ -69,7 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (scrollNotification is ScrollEndNotification) {
                     if (scrollNotification.metrics.maxScrollExtent ==
                         scrollNotification.metrics.pixels) {
-                      print("\nreached bottom ");
+                      if (state.currentAbsenceRecordsCount <
+                          state.totalAbsenceRecordsCount) {
+                        context
+                            .read<AbsenceRecordsBloc>()
+                            .add(FetchPaginatedRecordsEvent());
+                      }
                     }
                   }
                   return true;

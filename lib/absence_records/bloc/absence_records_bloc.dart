@@ -15,7 +15,9 @@ class AbsenceRecordsBloc
     extends Bloc<AbsenceRecordsEvent, AbsenceRecordsState> {
   late final AbsenceRecordsService _absenceRecordsService;
   late final MemberRecordsService _memberRecordsService;
-  final int paginationLimit = 10;
+
+  final List<AbsenceState> _allAbsenceRecords = [];
+  final int _pageLimit = 10;
 
   AbsenceRecordsBloc(
       {AbsenceRecordsService? absenceRecordsService,
@@ -36,7 +38,9 @@ class AbsenceRecordsBloc
     if (event is FetchAllRecordsEvent) {
       emit(AbsenceRecordsLoadingState());
       await _fetchAllRecords(emit);
-    } else if (event is AbsenceRecordsWithFilterEvent) {}
+    } else if (event is FetchPaginatedRecordsEvent) {
+      _sendPaginatedAbsenceRecords(emit);
+    }
   }
 
   Future<void> _fetchAllRecords(Emitter<AbsenceRecordsState> emit) async {
@@ -44,12 +48,11 @@ class AbsenceRecordsBloc
     if (membersResponse is MemberRecordsResponseModel) {
       final absenceRecords = await _absenceRecordsService.executeService();
       if (absenceRecords is AbsenceRecordsResponseModel) {
-        List<AbsenceState> records = [];
         for (AbsenceResponseModel record in absenceRecords.records) {
           MemberResponseModel? member =
               _getMemberDetailsForRecord(record, membersResponse.members);
           if (member != null) {
-            records.add(AbsenceState(
+            _allAbsenceRecords.add(AbsenceState(
                 name: member.name,
                 type: _getRequestType(type: record.type),
                 startDate: record.startDate,
@@ -61,9 +64,7 @@ class AbsenceRecordsBloc
                 admitterNote: record.admitterNote));
           }
         }
-        emit(state.copyWith(
-          records: records,
-        ));
+        _sendPaginatedAbsenceRecords(emit);
       } else {
         emit(AbsenceRecordsErrorState());
       }
@@ -91,5 +92,22 @@ class AbsenceRecordsBloc
         : rejectedAt != null
             ? AbsenceStatusType.rejected
             : AbsenceStatusType.requested;
+  }
+
+  void _sendPaginatedAbsenceRecords(Emitter<AbsenceRecordsState> emit) {
+    if (state.currentAbsenceRecordsCount < _allAbsenceRecords.length) {
+      List<AbsenceState> paginatedRecords = [];
+      for (int i = state.currentAbsenceRecordsCount;
+          i < (_pageLimit + state.currentAbsenceRecordsCount) &&
+              i < _allAbsenceRecords.length;
+          i++) {
+        paginatedRecords.add(_allAbsenceRecords[i]);
+      }
+      emit(state.copyWith(
+          totalAbsenceRecordsCount: _allAbsenceRecords.length,
+          currentAbsenceRecordsCount:
+              (state.currentAbsenceRecordsCount + paginatedRecords.length),
+          records: [...state.records, ...paginatedRecords]));
+    }
   }
 }
