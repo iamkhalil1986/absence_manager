@@ -1,12 +1,13 @@
+import 'package:absence_manager/absence_records/absence_records_enums.dart';
 import 'package:equatable/equatable.dart';
 
 class AbsenceState extends Equatable {
   final String name;
-  final String type;
+  final AbsenceRequestType type;
   final String startDate;
   final String endDate;
   final String memberNote;
-  final String status;
+  final AbsenceStatusType status;
   final String admitterNote;
 
   const AbsenceState(

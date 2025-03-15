@@ -8,40 +8,33 @@ class AbsenceRecordsState extends Equatable {
   final String? dateFilter;
   final AbsenceStatusType? statusFilter;
   final List<AbsenceState> records;
-  final bool hasError;
 
   const AbsenceRecordsState(
       {this.visibleRecordsCount = 0,
       this.allRecordsCount = 0,
       this.dateFilter,
       this.statusFilter,
-      this.records = const [],
-      this.hasError = false});
+      this.records = const []});
 
   AbsenceRecordsState copyWith(
       {int? visibleRecordsCount,
       int? allRecordsCount,
       String? dateFilter,
       AbsenceStatusType? statusFilter,
-      List<AbsenceState>? records,
-      bool? hasError}) {
+      List<AbsenceState>? records}) {
     return AbsenceRecordsState(
-      visibleRecordsCount: visibleRecordsCount ?? this.visibleRecordsCount,
-      allRecordsCount: allRecordsCount ?? this.allRecordsCount,
-      dateFilter: dateFilter ?? this.dateFilter,
-      statusFilter: statusFilter ?? this.statusFilter,
-      records: records ?? this.records,
-      hasError: hasError ?? this.hasError,
-    );
+        visibleRecordsCount: visibleRecordsCount ?? this.visibleRecordsCount,
+        allRecordsCount: allRecordsCount ?? this.allRecordsCount,
+        dateFilter: dateFilter ?? this.dateFilter,
+        statusFilter: statusFilter ?? this.statusFilter,
+        records: records ?? this.records);
   }
 
   @override
-  List<Object?> get props => [
-        visibleRecordsCount,
-        allRecordsCount,
-        dateFilter,
-        statusFilter,
-        records,
-        hasError
-      ];
+  List<Object?> get props =>
+      [visibleRecordsCount, allRecordsCount, dateFilter, statusFilter, records];
 }
+
+class AbsenceRecordsLoadingState extends AbsenceRecordsState {}
+
+class AbsenceRecordsErrorState extends AbsenceRecordsState {}

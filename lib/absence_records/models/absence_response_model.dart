@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class AbsenceResponseModel extends Equatable {
-  final String? admitterId;
+  final int? admitterId;
   final String admitterNote;
   final String? confirmedAt;
   final String createdAt;

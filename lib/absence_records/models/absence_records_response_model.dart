@@ -2,15 +2,15 @@ import 'package:absence_manager/absence_records/models/absence_response_model.da
 import 'package:absence_manager/core/response_model.dart';
 
 class AbsenceRecordsResponseModel extends ResponseModel {
-  final List<AbsenceResponseModel> absenceRecords;
+  final List<AbsenceResponseModel> records;
 
   AbsenceRecordsResponseModel.fromJson(List<dynamic> recordsMap)
-      : absenceRecords = recordsMap
+      : records = recordsMap
             .map((record) => AbsenceResponseModel.fromJson(record))
             .toList();
 
   @override
-  List<Object?> get props => [absenceRecords];
+  List<Object?> get props => [records];
 }
 
 // This approach of handling error is very useful when dealing with multiple error scenarios

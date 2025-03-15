@@ -6,4 +6,4 @@ enum AbsenceRequestType {
   final String type;
 }
 
-enum AbsenceStatusType { requested, confirmed, rejected, unknown }
+enum AbsenceStatusType { requested, confirmed, rejected }

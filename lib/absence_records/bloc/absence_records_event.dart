@@ -7,6 +7,10 @@ class AbsenceRecordsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class FetchAllRecordsEvent extends AbsenceRecordsEvent {}
+
+class FetchPaginatedRecordsEvent extends AbsenceRecordsEvent {}
+
 class AbsenceRecordsWithFilterEvent extends AbsenceRecordsEvent {
   final String? filterDate;
   final AbsenceStatusType? filterStatus;
