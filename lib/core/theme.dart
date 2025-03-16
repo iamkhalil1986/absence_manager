@@ -17,7 +17,7 @@ class MaterialTheme {
       onSecondary: Color(0xffffffff),
       secondaryContainer: Color(0xffdce7c8),
       onSecondaryContainer: Color(0xff404a33),
-      tertiary: Color(0xff386663),
+      tertiary: Color(0xff32aa00),
       onTertiary: Color(0xffffffff),
       tertiaryContainer: Color(0xffbcece7),
       onTertiaryContainer: Color(0xff1f4e4b),

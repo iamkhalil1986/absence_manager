@@ -22,4 +22,4 @@ class AbsenceRecordsWithFilterEvent extends AbsenceRecordsEvent {
 
 class ClearDateFilterEvent extends AbsenceRecordsEvent {}
 
-class ClearStatusFilterEvent extends AbsenceRecordsEvent {}
+class ClearRequestTypeFilterEvent extends AbsenceRecordsEvent {}

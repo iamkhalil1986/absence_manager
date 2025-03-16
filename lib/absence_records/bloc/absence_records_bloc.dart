@@ -13,33 +13,36 @@ import 'package:collection/collection.dart';
 
 class AbsenceRecordsBloc
     extends Bloc<AbsenceRecordsEvent, AbsenceRecordsState> {
-  late final AbsenceRecordsService _absenceRecordsService;
-  late final MemberRecordsService _memberRecordsService;
+  final AbsenceRecordsService _absenceRecordsService;
+  final MemberRecordsService _memberRecordsService;
 
   final List<AbsenceState> _allAbsenceRecords = [];
   final int _pageLimit = 10;
 
-  AbsenceRecordsBloc(
-      {AbsenceRecordsService? absenceRecordsService,
-      MemberRecordsService? memberRecordsService})
-      : super(const AbsenceRecordsState()) {
-    _absenceRecordsService = absenceRecordsService ?? AbsenceRecordsService();
-    _memberRecordsService = memberRecordsService ?? MemberRecordsService();
-
-    on<AbsenceRecordsEvent>(
-      absenceRecordsRequestHandler,
-    );
+  AbsenceRecordsBloc({
+    AbsenceRecordsService? absenceRecordsService,
+    MemberRecordsService? memberRecordsService,
+  })  : _absenceRecordsService =
+            absenceRecordsService ?? AbsenceRecordsService(),
+        _memberRecordsService = memberRecordsService ?? MemberRecordsService(),
+        super(const AbsenceRecordsState()) {
+    on<AbsenceRecordsEvent>(_absenceRecordsRequestHandler);
   }
 
-  Future<void> absenceRecordsRequestHandler(
+  Future<void> _absenceRecordsRequestHandler(
     AbsenceRecordsEvent event,
     Emitter<AbsenceRecordsState> emit,
   ) async {
     if (event is FetchAllRecordsEvent) {
-      emit(AbsenceRecordsLoadingState());
+      emit(AbsenceRecordsInitialLoadingState());
       await _fetchAllRecords(emit);
     } else if (event is FetchPaginatedRecordsEvent) {
       _sendPaginatedAbsenceRecords(emit);
+    } else if (event is AbsenceRecordsWithFilterEvent) {
+      _applyFilterAndFetchRecords(event, emit);
+    } else if (event is ClearDateFilterEvent ||
+        event is ClearRequestTypeFilterEvent) {
+      _clearFilterAndFetchRecords(emit, event);
     }
   }
 
@@ -48,29 +51,56 @@ class AbsenceRecordsBloc
     if (membersResponse is MemberRecordsResponseModel) {
       final absenceRecords = await _absenceRecordsService.executeService();
       if (absenceRecords is AbsenceRecordsResponseModel) {
-        for (AbsenceResponseModel record in absenceRecords.records) {
-          MemberResponseModel? member =
-              _getMemberDetailsForRecord(record, membersResponse.members);
-          if (member != null) {
-            _allAbsenceRecords.add(AbsenceState(
-                name: member.name,
-                type: _getRequestType(type: record.type),
-                startDate: DateTime.parse(record.startDate),
-                endDate: DateTime.parse(record.endDate),
-                memberNote: record.memberNote,
-                status: _getAbsenceStatus(
-                    confirmedAt: record.confirmedAt,
-                    rejectedAt: record.rejectedAt),
-                admitterNote: record.admitterNote));
-          }
-        }
-        _sendPaginatedAbsenceRecords(emit);
+        _processFetchedAbsenceRecords(absenceRecords, membersResponse, emit);
       } else {
         emit(AbsenceRecordsErrorState());
       }
     } else {
       emit(AbsenceRecordsErrorState());
     }
+  }
+
+  void _processFetchedAbsenceRecords(
+    AbsenceRecordsResponseModel absenceRecords,
+    MemberRecordsResponseModel membersResponse,
+    Emitter<AbsenceRecordsState> emit,
+  ) {
+    for (var record in absenceRecords.records) {
+      final member =
+          _getMemberDetailsForRecord(record, membersResponse.members);
+      if (member != null) {
+        _allAbsenceRecords.add(AbsenceState(
+          name: member.name,
+          type: _getRequestType(type: record.type),
+          startDate: DateTime.parse(record.startDate),
+          endDate: DateTime.parse(record.endDate),
+          memberNote: record.memberNote,
+          status: _getAbsenceStatus(
+              confirmedAt: record.confirmedAt, rejectedAt: record.rejectedAt),
+          admitterNote: record.admitterNote,
+        ));
+      }
+    }
+    _sendPaginatedAbsenceRecords(emit);
+  }
+
+  void _applyFilterAndFetchRecords(
+      AbsenceRecordsWithFilterEvent event, Emitter<AbsenceRecordsState> emit) {
+    emit(AbsenceRecordsState().copyWith(
+      requestTypeFilter: event.filterModel?.selectedRequestType,
+      dateFilter: event.filterModel?.selectedDate,
+    ));
+    _sendPaginatedAbsenceRecords(emit);
+  }
+
+  void _clearFilterAndFetchRecords(Emitter<AbsenceRecordsState> emit, event) {
+    if (event is ClearDateFilterEvent) {
+      emit(AbsenceRecordsState()
+          .copyWith(requestTypeFilter: state.requestTypeFilter));
+    } else if (event is ClearRequestTypeFilterEvent) {
+      emit(AbsenceRecordsState().copyWith(dateFilter: state.dateFilter));
+    }
+    _sendPaginatedAbsenceRecords(emit);
   }
 
   MemberResponseModel? _getMemberDetailsForRecord(
@@ -87,27 +117,49 @@ class AbsenceRecordsBloc
 
   AbsenceStatusType _getAbsenceStatus(
       {String? confirmedAt, String? rejectedAt}) {
-    return confirmedAt != null
-        ? AbsenceStatusType.confirmed
-        : rejectedAt != null
-            ? AbsenceStatusType.rejected
-            : AbsenceStatusType.requested;
+    if (confirmedAt != null) return AbsenceStatusType.confirmed;
+    return rejectedAt != null
+        ? AbsenceStatusType.rejected
+        : AbsenceStatusType.requested;
   }
 
   void _sendPaginatedAbsenceRecords(Emitter<AbsenceRecordsState> emit) {
-    if (state.currentAbsenceRecordsCount < _allAbsenceRecords.length) {
-      List<AbsenceState> paginatedRecords = [];
-      for (int i = state.currentAbsenceRecordsCount;
-          i < (_pageLimit + state.currentAbsenceRecordsCount) &&
-              i < _allAbsenceRecords.length;
-          i++) {
-        paginatedRecords.add(_allAbsenceRecords[i]);
+    final filteredRecords = _allAbsenceRecords.where((record) {
+      if (state.dateFilter != null && state.requestTypeFilter != null) {
+        // Case 4: Both dateFilter and requestTypeFilter are not null
+        return state.dateFilter!
+                .isAfter(record.startDate.add(Duration(days: -1))) &&
+            state.dateFilter!.isBefore(record.endDate.add(Duration(days: 1))) &&
+            state.requestTypeFilter == record.type;
+      } else if (state.dateFilter != null) {
+        // Case 2: Only dateFilter is not null
+        return state.dateFilter!
+                .isAfter(record.startDate.add(Duration(days: -1))) &&
+            state.dateFilter!.isBefore(record.endDate.add(Duration(days: 1)));
+      } else if (state.requestTypeFilter != null) {
+        // Case 3: Only requestTypeFilter is not null
+        return state.requestTypeFilter == record.type;
+      } else {
+        // Case 1: Both filters are null (no filtering)
+        return true;
       }
+    }).toList();
+    _sendPaginatedRecords(emit, filteredRecords);
+  }
+
+  void _sendPaginatedRecords(
+      Emitter<AbsenceRecordsState> emit, List<AbsenceState> records) {
+    if (state.currentAbsenceRecordsCount < records.length) {
+      final paginatedRecords = records
+          .skip(state.currentAbsenceRecordsCount)
+          .take(_pageLimit)
+          .toList();
       emit(state.copyWith(
-          totalAbsenceRecordsCount: _allAbsenceRecords.length,
-          currentAbsenceRecordsCount:
-              (state.currentAbsenceRecordsCount + paginatedRecords.length),
-          records: [...state.records, ...paginatedRecords]));
+        totalAbsenceRecordsCount: records.length,
+        currentAbsenceRecordsCount:
+            state.currentAbsenceRecordsCount + paginatedRecords.length,
+        records: [...state.records, ...paginatedRecords],
+      ));
     }
   }
 }

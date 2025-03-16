@@ -5,24 +5,24 @@ import 'package:equatable/equatable.dart';
 class AbsenceRecordsState extends Equatable {
   final int currentAbsenceRecordsCount;
   final int totalAbsenceRecordsCount;
-  final String? dateFilter;
-  final AbsenceStatusType? statusFilter;
+  final DateTime? dateFilter;
+  final AbsenceRequestType? requestTypeFilter;
   final List<AbsenceState> records;
 
   const AbsenceRecordsState(
       {this.currentAbsenceRecordsCount = 0,
       this.totalAbsenceRecordsCount = 0,
       this.dateFilter,
-      this.statusFilter,
+      this.requestTypeFilter,
       this.records = const []});
 
   AbsenceRecordsState copyWith(
       {int? currentAbsenceRecordsCount,
       int? totalAbsenceRecordsCount,
-      String? dateFilter,
+      DateTime? dateFilter,
       bool clearDateFilter = false,
-      AbsenceStatusType? statusFilter,
-      bool clearStatusFilter = false,
+      AbsenceRequestType? requestTypeFilter,
+      bool clearRequestTypeFilter = false,
       List<AbsenceState>? records}) {
     return AbsenceRecordsState(
         currentAbsenceRecordsCount:
@@ -30,8 +30,9 @@ class AbsenceRecordsState extends Equatable {
         totalAbsenceRecordsCount:
             totalAbsenceRecordsCount ?? this.totalAbsenceRecordsCount,
         dateFilter: clearDateFilter ? null : dateFilter ?? this.dateFilter,
-        statusFilter:
-            clearStatusFilter ? null : statusFilter ?? this.statusFilter,
+        requestTypeFilter: clearRequestTypeFilter
+            ? null
+            : requestTypeFilter ?? this.requestTypeFilter,
         records: records ?? this.records);
   }
 
@@ -40,11 +41,11 @@ class AbsenceRecordsState extends Equatable {
         currentAbsenceRecordsCount,
         totalAbsenceRecordsCount,
         dateFilter,
-        statusFilter,
+        requestTypeFilter,
         records
       ];
 }
 
-class AbsenceRecordsLoadingState extends AbsenceRecordsState {}
+class AbsenceRecordsInitialLoadingState extends AbsenceRecordsState {}
 
 class AbsenceRecordsErrorState extends AbsenceRecordsState {}
