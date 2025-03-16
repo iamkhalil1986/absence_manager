@@ -38,6 +38,7 @@ dependencies:
   equatable: ^2.0.7
   flutter_bloc: ^9.1.0
   collection:
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:

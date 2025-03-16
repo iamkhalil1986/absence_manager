@@ -55,8 +55,8 @@ class AbsenceRecordsBloc
             _allAbsenceRecords.add(AbsenceState(
                 name: member.name,
                 type: _getRequestType(type: record.type),
-                startDate: record.startDate,
-                endDate: record.endDate,
+                startDate: DateTime.parse(record.startDate),
+                endDate: DateTime.parse(record.endDate),
                 memberNote: record.memberNote,
                 status: _getAbsenceStatus(
                     confirmedAt: record.confirmedAt,

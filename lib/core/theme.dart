@@ -11,11 +11,11 @@ class MaterialTheme {
       primary: Color(0xfff2973d),
       surfaceTint: Color(0xfff2973d),
       onPrimary: Color(0xffffffff),
-      primaryContainer: Color(0xffffffff),
+      primaryContainer: Color(0xffcdeda3),
       onPrimaryContainer: Color(0xfff2973d),
       secondary: Color(0xff586249),
       onSecondary: Color(0xffffffff),
-      secondaryContainer: Color(0xffffffff),
+      secondaryContainer: Color(0xffdce7c8),
       onSecondaryContainer: Color(0xff404a33),
       tertiary: Color(0xff386663),
       onTertiary: Color(0xffffffff),
@@ -38,7 +38,7 @@ class MaterialTheme {
       onPrimaryFixed: Color(0xff102000),
       primaryFixedDim: Color(0xffb1d18a),
       onPrimaryFixedVariant: Color(0xfff2973d),
-      secondaryFixed: Color(0xffffffff),
+      secondaryFixed: Color(0xffdce7c8),
       onSecondaryFixed: Color(0xff151e0b),
       secondaryFixedDim: Color(0xffbfcbad),
       onSecondaryFixedVariant: Color(0xff404a33),
@@ -55,20 +55,4 @@ class MaterialTheme {
       surfaceContainerHighest: Color(0xffe2e3d8),
     );
   }
-
-  ThemeData light() {
-    return theme(lightScheme());
-  }
-
-  ThemeData theme(ColorScheme colorScheme) => ThemeData(
-        useMaterial3: true,
-        brightness: colorScheme.brightness,
-        colorScheme: colorScheme,
-        textTheme: textTheme.apply(
-          bodyColor: colorScheme.onSurface,
-          displayColor: colorScheme.onSurface,
-        ),
-        scaffoldBackgroundColor: colorScheme.surface,
-        canvasColor: colorScheme.surface,
-      );
 }

@@ -4,8 +4,8 @@ import 'package:equatable/equatable.dart';
 class AbsenceState extends Equatable {
   final String name;
   final AbsenceRequestType type;
-  final String startDate;
-  final String endDate;
+  final DateTime startDate;
+  final DateTime endDate;
   final String memberNote;
   final AbsenceStatusType status;
   final String admitterNote;

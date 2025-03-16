@@ -1,4 +1,4 @@
-import 'package:absence_manager/absence_records/absence_records_enums.dart';
+import 'package:absence_manager/absence_records/models/absence_records_filter_model.dart';
 import 'package:equatable/equatable.dart';
 
 class AbsenceRecordsEvent extends Equatable {
@@ -12,11 +12,14 @@ class FetchAllRecordsEvent extends AbsenceRecordsEvent {}
 class FetchPaginatedRecordsEvent extends AbsenceRecordsEvent {}
 
 class AbsenceRecordsWithFilterEvent extends AbsenceRecordsEvent {
-  final String? filterDate;
-  final AbsenceStatusType? filterStatus;
+  final AbsenceRecordsFilterModel? filterModel;
 
-  const AbsenceRecordsWithFilterEvent({this.filterDate, this.filterStatus});
+  const AbsenceRecordsWithFilterEvent({this.filterModel});
 
   @override
-  List<Object?> get props => [filterDate, filterStatus];
+  List<Object?> get props => [filterModel];
 }
+
+class ClearDateFilterEvent extends AbsenceRecordsEvent {}
+
+class ClearStatusFilterEvent extends AbsenceRecordsEvent {}
