@@ -5,7 +5,7 @@ import 'package:absence_manager/absence_records/bloc/absence_records_event.dart'
 import 'package:absence_manager/absence_records/bloc/absence_records_state.dart';
 import 'package:absence_manager/absence_records/bloc/absence_state.dart';
 import 'package:absence_manager/absence_records/models/absence_records_filter_model.dart';
-import 'package:absence_manager/absence_records/ui/absence_record_detail_Widget.dart';
+import 'package:absence_manager/absence_records/ui/absence_record_detail_widget.dart';
 import 'package:absence_manager/absence_records/ui/absence_records_filter_dialog.dart';
 import 'package:absence_manager/core/shared_utils.dart';
 import 'package:flutter/material.dart';
