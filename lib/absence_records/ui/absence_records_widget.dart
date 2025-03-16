@@ -5,6 +5,7 @@ import 'package:absence_manager/absence_records/bloc/absence_records_event.dart'
 import 'package:absence_manager/absence_records/bloc/absence_records_state.dart';
 import 'package:absence_manager/absence_records/bloc/absence_state.dart';
 import 'package:absence_manager/absence_records/models/absence_records_filter_model.dart';
+import 'package:absence_manager/absence_records/ui/absence_record_detail_Widget.dart';
 import 'package:absence_manager/absence_records/ui/absence_records_filter_dialog.dart';
 import 'package:absence_manager/core/shared_utils.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class AbsenceRecordsWidget extends StatelessWidget {
               return const Center(
                   child: Text(AbsenceRecordsStrings.technicalDifficulties));
             } else {
-              return AbsenceRecordsList(state: state);
+              return _AbsenceRecordsList(state: state);
             }
           },
         ),
@@ -56,10 +57,10 @@ class AbsenceRecordsWidget extends StatelessWidget {
   }
 }
 
-class AbsenceRecordsList extends StatelessWidget {
+class _AbsenceRecordsList extends StatelessWidget {
   final AbsenceRecordsState state;
 
-  const AbsenceRecordsList({super.key, required this.state});
+  const _AbsenceRecordsList({required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class AbsenceRecordsList extends StatelessWidget {
       color: theme.colorScheme.surfaceContainer,
       child: Column(
         children: [
-          PageAndFilterSection(state: state),
+          _PageAndFilterSection(state: state),
           state.records.isEmpty
               ? Expanded(
                   child: Center(
@@ -93,7 +94,7 @@ class AbsenceRecordsList extends StatelessWidget {
                     itemCount: state.records.length,
                     itemBuilder: (context, index) {
                       final record = state.records[index];
-                      return AbsenceRecordCard(record: record);
+                      return _AbsenceRecordCard(record: record);
                     },
                   ),
                 )),
@@ -103,10 +104,10 @@ class AbsenceRecordsList extends StatelessWidget {
   }
 }
 
-class PageAndFilterSection extends StatelessWidget {
+class _PageAndFilterSection extends StatelessWidget {
   final AbsenceRecordsState state;
 
-  const PageAndFilterSection({super.key, required this.state});
+  const _PageAndFilterSection({required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +124,7 @@ class PageAndFilterSection extends StatelessWidget {
           Row(
             children: [
               if (state.dateFilter != null)
-                FilterTagWidget(
+                _FilterTagWidget(
                   label: SharedUtils.getYearMonthDayFormat(state.dateFilter),
                   onTapClear: () {
                     context
@@ -133,7 +134,7 @@ class PageAndFilterSection extends StatelessWidget {
                 ),
               SizedBox(width: 8),
               if (state.requestTypeFilter != null)
-                FilterTagWidget(
+                _FilterTagWidget(
                   label: state.requestTypeFilter!.type.toUpperCase(),
                   onTapClear: () {
                     context
@@ -149,12 +150,11 @@ class PageAndFilterSection extends StatelessWidget {
   }
 }
 
-class FilterTagWidget extends StatelessWidget {
+class _FilterTagWidget extends StatelessWidget {
   final String label;
   final VoidCallback onTapClear;
 
-  const FilterTagWidget(
-      {super.key, required this.label, required this.onTapClear});
+  const _FilterTagWidget({required this.label, required this.onTapClear});
 
   @override
   Widget build(BuildContext context) {
@@ -194,10 +194,10 @@ class FilterTagWidget extends StatelessWidget {
   }
 }
 
-class AbsenceRecordCard extends StatelessWidget {
+class _AbsenceRecordCard extends StatelessWidget {
   final AbsenceState record;
 
-  const AbsenceRecordCard({super.key, required this.record});
+  const _AbsenceRecordCard({required this.record});
 
   @override
   Widget build(BuildContext context) {
@@ -207,16 +207,7 @@ class AbsenceRecordCard extends StatelessWidget {
         Expanded(
           child: Card(
             color: theme.colorScheme.surface,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  NameAndStatusListItem(record: record),
-                  DurationListItem(record: record),
-                  CategoryListItem(record: record),
-                ],
-              ),
-            ),
+            child: _AbsenceRecordsListItem(record: record),
           ),
         ),
       ],
@@ -224,117 +215,112 @@ class AbsenceRecordCard extends StatelessWidget {
   }
 }
 
-class NameAndStatusListItem extends StatelessWidget {
+class _AbsenceRecordsListItem extends StatelessWidget {
   final AbsenceState record;
 
-  const NameAndStatusListItem({super.key, required this.record});
+  const _AbsenceRecordsListItem({required this.record});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     Color statusColor;
     String status;
-
+    IconData statusIcon;
     switch (record.status) {
       case AbsenceStatusType.requested:
         status = AbsenceRecordsStrings.requested;
         statusColor = theme.colorScheme.primary;
+        statusIcon = Icons.hourglass_empty;
       case AbsenceStatusType.confirmed:
         status = AbsenceRecordsStrings.confirmed;
         statusColor = theme.colorScheme.tertiary;
+        statusIcon = Icons.check_circle;
       case AbsenceStatusType.rejected:
         status = AbsenceRecordsStrings.rejected;
         statusColor = theme.colorScheme.error;
+        statusIcon = Icons.cancel;
     }
-
-    return Row(
-      children: [
-        Expanded(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+    final duration = record.endDate.difference(record.startDate).inDays + 1;
+    return ListTile(
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            builder: (BuildContext context) {
+              return AbsenceRecordDetailWidget(
+                record: record,
+                status: status,
+                statusColor: statusColor,
+                statusIcon: statusIcon,
+              );
+            });
+      },
+      leading: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: statusColor,
+        ),
+        child: Icon(
+          statusIcon,
+          color: Colors.white,
+          size: 24,
+        ),
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
               record.name,
-              style: theme.textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
-            Row(
-              children: [
-                Text(
-                  record.type.type.toUpperCase(),
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
-            )
-          ],
-        )),
-        Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: statusColor.withAlpha(50),
-            border: Border.all(
-              color: statusColor,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(8),
           ),
-          child: Text(status,
-              style: theme.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.bold,
+          Container(
+            alignment: Alignment.topRight,
+            padding: EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: statusColor.withAlpha(20),
+              border: Border.all(
                 color: statusColor,
-              )),
-        ),
-      ],
-    );
-  }
-}
-
-class DurationListItem extends StatelessWidget {
-  final AbsenceState record;
-
-  const DurationListItem({super.key, required this.record});
-
-  @override
-  Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 4.0),
-          child: Row(
-            children: [
-              Text("Start Date: ",
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text(SharedUtils.getYearMonthDayFormat(record.startDate),
-                  style: theme.textTheme.bodySmall),
-              SizedBox(width: 8),
-              Text("End Date: ",
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text(SharedUtils.getYearMonthDayFormat(record.endDate),
-                  style: theme.textTheme.bodySmall),
-            ],
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(status,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: statusColor,
+                )),
+          )
+        ],
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            record.type.type.capitalizeFirst,
+            style: theme.textTheme.bodySmall,
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class CategoryListItem extends StatelessWidget {
-  final AbsenceState record;
-
-  const CategoryListItem({super.key, required this.record});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(record.type.type.toString()),
-      ],
+          Text(
+            'Duration: $duration ${duration == 1 ? "day" : "days"}',
+            style: theme.textTheme.bodySmall,
+          ),
+          duration == 1
+              ? Text(
+                  "On: ${SharedUtils.getYearMonthDayFormat(record.startDate)}",
+                  style: theme.textTheme.bodySmall?.copyWith(
+                      //fontWeight: FontWeight.bold,
+                      ))
+              : Text(
+                  "From ${SharedUtils.getYearMonthDayFormat(record.startDate)} To ${SharedUtils.getYearMonthDayFormat(record.endDate)}",
+                  style: theme.textTheme.bodySmall?.copyWith(
+                      //fontWeight: FontWeight.bold,
+                      )),
+        ],
+      ),
     );
   }
 }
