@@ -9,6 +9,8 @@ import 'package:absence_manager/absence_records/bloc/absence_records_state.dart'
 import 'package:absence_manager/absence_records/bloc/absence_state.dart';
 import 'package:absence_manager/absence_records/models/absence_records_response_model.dart';
 import 'package:absence_manager/absence_records/models/member_records_response_model.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
@@ -162,11 +164,32 @@ class MockMemberRecordsService extends Mock implements MemberRecordsService {
   }
 }
 
-class MockAbsenceRecordsBloc extends Mock implements AbsenceRecordsBloc {
+class MockAbsenceRecordsBloc
+    extends MockBloc<AbsenceRecordsEvent, AbsenceRecordsState>
+    implements AbsenceRecordsBloc {
   MockAbsenceRecordsBloc();
   factory MockAbsenceRecordsBloc.forFilter() {
     final bloc = MockAbsenceRecordsBloc();
-    when(() => bloc.state).thenAnswer((_) => AbsenceRecordsState());
+    when(() => bloc.add(AbsenceRecordsEvent())).thenAnswer((_) async {
+      bloc.emit(AbsenceRecordsState()); // Emitting the updated state
+    });
+    when(() => bloc.add(UpdateRequestTypeFilterEvent(
+        requestTypeFilter: AbsenceRequestType.sickness))).thenAnswer((_) async {
+      bloc.emit(MockDataProvider.absenceRecords.copyWith(
+          requestTypeFilter:
+              AbsenceRequestType.sickness)); // Emitting the updated state
+    });
+    when(() => bloc.add(UpdateDateFilterEvent(dateFilter: DateTime.now())))
+        .thenAnswer((_) async {
+      bloc.emit(MockDataProvider.absenceRecords.copyWith(
+          requestTypeFilter: AbsenceRequestType.sickness,
+          dateFilter: DateTime.now())); // Emitting the updated state
+    });
+    when(() => bloc.state).thenReturn(AbsenceRecordsState());
     return bloc;
   }
 }
+
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
+class MockRoute extends Mock implements Route<dynamic> {}

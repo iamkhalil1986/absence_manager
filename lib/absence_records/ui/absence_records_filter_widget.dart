@@ -1,5 +1,6 @@
 import 'package:absence_manager/absence_records/absence_records_enums.dart';
 import 'package:absence_manager/absence_records/absence_records_strings.dart';
+import 'package:absence_manager/absence_records/absence_records_widget_keys.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_bloc.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_event.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_state.dart';
@@ -129,6 +130,7 @@ class _RequestTypeDropdown extends StatelessWidget {
           style: theme.textTheme.labelLarge,
         ),
         DropdownButtonFormField<AbsenceRequestType>(
+            key: AbsenceRecordsWidgetKeys.requestTypeFieldKey,
             value: selectedRequestType,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -177,6 +179,7 @@ class _DatePickerField extends StatelessWidget {
           style: theme.textTheme.labelLarge,
         ),
         TextFormField(
+            key: AbsenceRecordsWidgetKeys.dateFieldKey,
             readOnly: true,
             controller: controller,
             style: theme.textTheme.bodyLarge,
@@ -219,6 +222,7 @@ class _ActionButtons extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: ElevatedButton(
+              key: AbsenceRecordsWidgetKeys.clearFilterButtonKey,
               onPressed: onCancel,
               style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
@@ -233,6 +237,7 @@ class _ActionButtons extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: ElevatedButton(
+              key: AbsenceRecordsWidgetKeys.submitButtonKey,
               onPressed: onSubmit,
               style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(

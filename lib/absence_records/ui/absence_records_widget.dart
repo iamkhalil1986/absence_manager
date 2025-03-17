@@ -1,5 +1,6 @@
 import 'package:absence_manager/absence_records/absence_records_enums.dart';
 import 'package:absence_manager/absence_records/absence_records_strings.dart';
+import 'package:absence_manager/absence_records/absence_records_widget_keys.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_bloc.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_event.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_state.dart';
@@ -119,6 +120,7 @@ class _PageAndFilterSection extends StatelessWidget {
             children: [
               if (state.dateFilter != null)
                 _FilterTagWidget(
+                  key: AbsenceRecordsWidgetKeys.dateFilterTagKey,
                   label: state.dateFilter!.formattedDate,
                   onTapClear: () {
                     context
@@ -129,6 +131,7 @@ class _PageAndFilterSection extends StatelessWidget {
               SizedBox(width: 8),
               if (state.requestTypeFilter != null)
                 _FilterTagWidget(
+                  key: AbsenceRecordsWidgetKeys.requestTypeFilterTagKey,
                   label: state.requestTypeFilter!.type.toUpperCase(),
                   onTapClear: () {
                     context
@@ -148,12 +151,14 @@ class _FilterTagWidget extends StatelessWidget {
   final String label;
   final VoidCallback onTapClear;
 
-  const _FilterTagWidget({required this.label, required this.onTapClear});
+  const _FilterTagWidget(
+      {required Key key, required this.label, required this.onTapClear});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return InkWell(
+      key: key,
       onTap: onTapClear,
       child: Container(
         padding: const EdgeInsets.all(4.0),

@@ -9,6 +9,7 @@ import 'absence_records/models/absence_response_model_test.dart';
 import 'absence_records/models/member_records_response_model_test.dart';
 import 'absence_records/models/member_response_model_test.dart';
 import 'absence_records/ui/absence_record_detail_widget_test.dart';
+import 'absence_records/ui/absence_records_filter_widget_test.dart';
 
 void main() {
   //bloc tests
@@ -29,4 +30,5 @@ void main() {
 
   //UI tests
   testAbsenceRecordDetailWidget();
+  testAbsenceRecordsFilterWidget();
 }
