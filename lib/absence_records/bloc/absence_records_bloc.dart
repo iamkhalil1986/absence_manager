@@ -15,16 +15,17 @@ class AbsenceRecordsBloc
     extends Bloc<AbsenceRecordsEvent, AbsenceRecordsState> {
   final AbsenceRecordsService _absenceRecordsService;
   final MemberRecordsService _memberRecordsService;
-
-  final List<AbsenceState> _allAbsenceRecords = [];
+  final List<AbsenceState> _allAbsenceRecords;
   final int _pageLimit = 10;
 
-  AbsenceRecordsBloc({
-    AbsenceRecordsService? absenceRecordsService,
-    MemberRecordsService? memberRecordsService,
-  })  : _absenceRecordsService =
+  AbsenceRecordsBloc(
+      {AbsenceRecordsService? absenceRecordsService,
+      MemberRecordsService? memberRecordsService,
+      List<AbsenceState>? allAbsenceRecords})
+      : _absenceRecordsService =
             absenceRecordsService ?? AbsenceRecordsService(),
         _memberRecordsService = memberRecordsService ?? MemberRecordsService(),
+        _allAbsenceRecords = allAbsenceRecords ?? [],
         super(const AbsenceRecordsState()) {
     on<AbsenceRecordsEvent>(_absenceRecordsRequestHandler);
   }
