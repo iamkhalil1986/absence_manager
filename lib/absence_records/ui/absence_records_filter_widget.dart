@@ -29,8 +29,9 @@ class AbsenceRecordsFilterWidget extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<AbsenceRecordsBloc, AbsenceRecordsState>(
             builder: (context, state) {
-          dateFieldController.text =
-              SharedUtils.getYearMonthDayFormat(state.dateFilter);
+          if (state.dateFilter != null) {
+            dateFieldController.text = state.dateFilter!.formattedDate;
+          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: SingleChildScrollView(
@@ -64,8 +65,7 @@ class AbsenceRecordsFilterWidget extends StatelessWidget {
                       controller: dateFieldController,
                       selectedDate: state.dateFilter,
                       onDateSelected: (date) {
-                        dateFieldController.text =
-                            SharedUtils.getYearMonthDayFormat(date);
+                        dateFieldController.text = date!.formattedDate;
                         context.read<AbsenceRecordsBloc>().add(
                               UpdateDateFilterEvent(dateFilter: date),
                             );

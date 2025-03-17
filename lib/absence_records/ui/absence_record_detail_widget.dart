@@ -57,20 +57,18 @@ class AbsenceRecordDetailWidget extends StatelessWidget {
           duration == 1
               ? _AbsenceRecordDetailItemWidget(
                   label: AbsenceRecordsStrings.date,
-                  value: SharedUtils.getYearMonthDayFormat(record.startDate))
+                  value: record.startDate.formattedDate)
               : Row(
                   children: [
                     Expanded(
                       child: _AbsenceRecordDetailItemWidget(
                           label: AbsenceRecordsStrings.startDate,
-                          value: SharedUtils.getYearMonthDayFormat(
-                              record.startDate)),
+                          value: record.startDate.formattedDate),
                     ),
                     Expanded(
                       child: _AbsenceRecordDetailItemWidget(
                           label: AbsenceRecordsStrings.endDate,
-                          value: SharedUtils.getYearMonthDayFormat(
-                              record.endDate)),
+                          value: record.endDate.formattedDate),
                     )
                   ],
                 ),

@@ -119,7 +119,7 @@ class _PageAndFilterSection extends StatelessWidget {
             children: [
               if (state.dateFilter != null)
                 _FilterTagWidget(
-                  label: SharedUtils.getYearMonthDayFormat(state.dateFilter),
+                  label: state.dateFilter!.formattedDate,
                   onTapClear: () {
                     context
                         .read<AbsenceRecordsBloc>()
@@ -304,13 +304,12 @@ class _AbsenceRecordsListItem extends StatelessWidget {
             style: theme.textTheme.bodySmall,
           ),
           duration == 1
-              ? Text(
-                  "On: ${SharedUtils.getYearMonthDayFormat(record.startDate)}",
+              ? Text("On: ${record.startDate.formattedDate}",
                   style: theme.textTheme.bodySmall?.copyWith(
                       //fontWeight: FontWeight.bold,
                       ))
               : Text(
-                  "From ${SharedUtils.getYearMonthDayFormat(record.startDate)} To ${SharedUtils.getYearMonthDayFormat(record.endDate)}",
+                  "From ${record.startDate.formattedDate} To ${record.endDate.formattedDate}",
                   style: theme.textTheme.bodySmall?.copyWith(
                       //fontWeight: FontWeight.bold,
                       )),
