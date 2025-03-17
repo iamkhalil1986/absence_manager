@@ -8,6 +8,7 @@ import 'absence_records/models/absence_records_response_model_test.dart';
 import 'absence_records/models/absence_response_model_test.dart';
 import 'absence_records/models/member_records_response_model_test.dart';
 import 'absence_records/models/member_response_model_test.dart';
+import 'absence_records/ui/absence_record_detail_widget_test.dart';
 
 void main() {
   //bloc tests
@@ -15,12 +16,17 @@ void main() {
   testAbsenceRecordsEvent();
   testAbsenceRecordsState();
   testAbsenceState();
+
   //api tests
   testAbsenceRecordsService();
   testMemberRecordsService();
+
   //models tests
   testAbsenceRecordsResponseModel();
   testAbsenceResponseModel();
   testMemberRecordsResponseModel();
   testMemberResponseModel();
+
+  //UI tests
+  testAbsenceRecordDetailWidget();
 }

@@ -1,7 +1,12 @@
 import 'dart:convert';
 
+import 'package:absence_manager/absence_records/absence_records_enums.dart';
 import 'package:absence_manager/absence_records/api/absence_records_service.dart';
 import 'package:absence_manager/absence_records/api/member_records_service.dart';
+import 'package:absence_manager/absence_records/bloc/absence_records_bloc.dart';
+import 'package:absence_manager/absence_records/bloc/absence_records_event.dart';
+import 'package:absence_manager/absence_records/bloc/absence_records_state.dart';
+import 'package:absence_manager/absence_records/bloc/absence_state.dart';
 import 'package:absence_manager/absence_records/models/absence_records_response_model.dart';
 import 'package:absence_manager/absence_records/models/member_records_response_model.dart';
 import 'package:http/http.dart' as http;
@@ -43,6 +48,44 @@ class MockDataProvider {
       """{"crewId":352,"id":2245,"image":"https://loremflickr.com/300/400","name":"Monika","userId":2290}""";
   static Map<String, dynamic> memberMap =
       jsonDecode(memberJson) as Map<String, dynamic>;
+
+  static var sicknessConfirmedRecord = AbsenceState(
+      name: "Adam Milne",
+      type: AbsenceRequestType.sickness,
+      startDate: DateTime(2021, 01, 13),
+      endDate: DateTime(2021, 01, 13),
+      status: AbsenceStatusType.confirmed,
+      admitterNote: "Admitter Note",
+      memberNote: "Member Note");
+
+  static var vacationRejectedRecord = AbsenceState(
+      name: "David Miller",
+      type: AbsenceRequestType.vacation,
+      startDate: DateTime(2021, 01, 13),
+      endDate: DateTime(2021, 01, 13),
+      status: AbsenceStatusType.rejected,
+      admitterNote: "Admitter Note",
+      memberNote: "Member Note");
+
+  static var vacationRequestedRecord = AbsenceState(
+      name: "David Willy",
+      type: AbsenceRequestType.vacation,
+      startDate: DateTime(2021, 01, 13),
+      endDate: DateTime(2021, 01, 13),
+      status: AbsenceStatusType.requested,
+      admitterNote: "Admitter Note",
+      memberNote: "Member Note");
+
+  static var absenceRecords = AbsenceRecordsState(
+      currentAbsenceRecordsCount: 1,
+      totalAbsenceRecordsCount: 1,
+      dateFilter: null,
+      requestTypeFilter: null,
+      records: [
+        sicknessConfirmedRecord,
+        vacationRejectedRecord,
+        vacationRequestedRecord
+      ]);
 }
 
 class MockHttpClient extends Mock implements http.Client {
@@ -116,5 +159,14 @@ class MockMemberRecordsService extends Mock implements MemberRecordsService {
     when(() => service.executeService())
         .thenAnswer((_) => Future.value(MemberRecordsErrorResponseModel()));
     return service;
+  }
+}
+
+class MockAbsenceRecordsBloc extends Mock implements AbsenceRecordsBloc {
+  MockAbsenceRecordsBloc();
+  factory MockAbsenceRecordsBloc.forFilter() {
+    final bloc = MockAbsenceRecordsBloc();
+    when(() => bloc.state).thenAnswer((_) => AbsenceRecordsState());
+    return bloc;
   }
 }
