@@ -78,15 +78,24 @@ class MockDataProvider {
       admitterNote: "Admitter Note",
       memberNote: "Member Note");
 
+  static var vacationConfirmedRecord = AbsenceState(
+      name: "David Willy",
+      type: AbsenceRequestType.vacation,
+      startDate: DateTime(2021, 01, 13),
+      endDate: DateTime(2021, 01, 15),
+      status: AbsenceStatusType.confirmed,
+      admitterNote: "Admitter Note",
+      memberNote: "Member Note");
+
   static var absenceRecords = AbsenceRecordsState(
-      currentAbsenceRecordsCount: 1,
-      totalAbsenceRecordsCount: 1,
-      dateFilter: null,
-      requestTypeFilter: null,
+      currentAbsenceRecordsCount: 3,
+      totalAbsenceRecordsCount: 3,
+      dateFilter: DateTime(2021, 01, 13),
+      requestTypeFilter: AbsenceRequestType.vacation,
       records: [
-        sicknessConfirmedRecord,
         vacationRejectedRecord,
-        vacationRequestedRecord
+        vacationRequestedRecord,
+        vacationConfirmedRecord
       ]);
 }
 
@@ -170,22 +179,25 @@ class MockAbsenceRecordsBloc
   MockAbsenceRecordsBloc();
   factory MockAbsenceRecordsBloc.forFilter() {
     final bloc = MockAbsenceRecordsBloc();
-    when(() => bloc.add(AbsenceRecordsEvent())).thenAnswer((_) async {
-      bloc.emit(AbsenceRecordsState()); // Emitting the updated state
-    });
-    when(() => bloc.add(UpdateRequestTypeFilterEvent(
-        requestTypeFilter: AbsenceRequestType.sickness))).thenAnswer((_) async {
-      bloc.emit(MockDataProvider.absenceRecords.copyWith(
-          requestTypeFilter:
-              AbsenceRequestType.sickness)); // Emitting the updated state
-    });
-    when(() => bloc.add(UpdateDateFilterEvent(dateFilter: DateTime.now())))
-        .thenAnswer((_) async {
-      bloc.emit(MockDataProvider.absenceRecords.copyWith(
-          requestTypeFilter: AbsenceRequestType.sickness,
-          dateFilter: DateTime.now())); // Emitting the updated state
-    });
     when(() => bloc.state).thenReturn(AbsenceRecordsState());
+    return bloc;
+  }
+
+  factory MockAbsenceRecordsBloc.withRecords() {
+    final bloc = MockAbsenceRecordsBloc();
+    when(() => bloc.state).thenReturn(MockDataProvider.absenceRecords);
+    return bloc;
+  }
+
+  factory MockAbsenceRecordsBloc.withNoRecords() {
+    final bloc = MockAbsenceRecordsBloc();
+    when(() => bloc.state).thenReturn(AbsenceRecordsState());
+    return bloc;
+  }
+
+  factory MockAbsenceRecordsBloc.withError() {
+    final bloc = MockAbsenceRecordsBloc();
+    when(() => bloc.state).thenReturn(AbsenceRecordsErrorState());
     return bloc;
   }
 }

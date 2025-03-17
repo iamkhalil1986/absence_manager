@@ -23,6 +23,7 @@ class AbsenceRecordsWidget extends StatelessWidget {
         title: const Text(AbsenceRecordsStrings.absenceRecords),
         actions: [
           IconButton(
+              key: AbsenceRecordsWidgetKeys.appBarFilterButtonKey,
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -41,7 +42,10 @@ class AbsenceRecordsWidget extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (state is AbsenceRecordsErrorState) {
               return const Center(
-                  child: Text(AbsenceRecordsStrings.technicalDifficulties));
+                  child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(AbsenceRecordsStrings.technicalDifficulties),
+              ));
             } else {
               return _AbsenceRecordsList(state: state);
             }
@@ -111,16 +115,19 @@ class _PageAndFilterSection extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          Text(
-            "Showing ${state.records.length} of ${state.totalAbsenceRecordsCount}",
-            style: theme.textTheme.bodyMedium,
+          Visibility(
+            visible: state.records.isNotEmpty,
+            child: Text(
+              "Showing ${state.records.length} of ${state.totalAbsenceRecordsCount}",
+              style: theme.textTheme.bodyMedium,
+            ),
           ),
           const Spacer(),
           Row(
             children: [
               if (state.dateFilter != null)
                 _FilterTagWidget(
-                  key: AbsenceRecordsWidgetKeys.dateFilterTagKey,
+                  tagKey: AbsenceRecordsWidgetKeys.dateFilterTagKey,
                   label: state.dateFilter!.formattedDate,
                   onTapClear: () {
                     context
@@ -131,7 +138,7 @@ class _PageAndFilterSection extends StatelessWidget {
               SizedBox(width: 8),
               if (state.requestTypeFilter != null)
                 _FilterTagWidget(
-                  key: AbsenceRecordsWidgetKeys.requestTypeFilterTagKey,
+                  tagKey: AbsenceRecordsWidgetKeys.requestTypeFilterTagKey,
                   label: state.requestTypeFilter!.type.toUpperCase(),
                   onTapClear: () {
                     context
@@ -150,15 +157,16 @@ class _PageAndFilterSection extends StatelessWidget {
 class _FilterTagWidget extends StatelessWidget {
   final String label;
   final VoidCallback onTapClear;
+  final Key tagKey;
 
   const _FilterTagWidget(
-      {required Key key, required this.label, required this.onTapClear});
+      {required this.tagKey, required this.label, required this.onTapClear});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return InkWell(
-      key: key,
+      key: tagKey,
       onTap: onTapClear,
       child: Container(
         padding: const EdgeInsets.all(4.0),

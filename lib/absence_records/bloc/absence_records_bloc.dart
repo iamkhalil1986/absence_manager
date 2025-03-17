@@ -133,7 +133,7 @@ class AbsenceRecordsBloc
   void _sendPaginatedAbsenceRecords(Emitter<AbsenceRecordsState> emit) {
     final filteredRecords = _allAbsenceRecords.where((record) {
       if (state.dateFilter != null && state.requestTypeFilter != null) {
-        // Case 4: Both dateFilter and requestTypeFilter are not null
+        // Case 1: Both dateFilter and requestTypeFilter are not null
         return state.dateFilter!
                 .isAfter(record.startDate.add(Duration(days: -1))) &&
             state.dateFilter!.isBefore(record.endDate.add(Duration(days: 1))) &&
@@ -147,7 +147,7 @@ class AbsenceRecordsBloc
         // Case 3: Only requestTypeFilter is not null
         return state.requestTypeFilter == record.type;
       } else {
-        // Case 1: Both filters are null (no filtering)
+        // Case 4: Both filters are null (no filtering)
         return true;
       }
     }).toList();
@@ -156,17 +156,15 @@ class AbsenceRecordsBloc
 
   void _sendPaginatedRecords(
       Emitter<AbsenceRecordsState> emit, List<AbsenceState> records) {
-    if (state.currentAbsenceRecordsCount < records.length) {
-      final paginatedRecords = records
-          .skip(state.currentAbsenceRecordsCount)
-          .take(_pageLimit)
-          .toList();
-      emit(state.copyWith(
-        totalAbsenceRecordsCount: records.length,
-        currentAbsenceRecordsCount:
-            state.currentAbsenceRecordsCount + paginatedRecords.length,
-        records: [...state.records, ...paginatedRecords],
-      ));
-    }
+    final paginatedRecords = records
+        .skip(state.currentAbsenceRecordsCount)
+        .take(_pageLimit)
+        .toList();
+    emit(state.copyWith(
+      totalAbsenceRecordsCount: records.length,
+      currentAbsenceRecordsCount:
+          state.currentAbsenceRecordsCount + paginatedRecords.length,
+      records: [...state.records, ...paginatedRecords],
+    ));
   }
 }

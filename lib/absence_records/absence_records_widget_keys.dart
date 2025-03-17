@@ -7,4 +7,5 @@ class AbsenceRecordsWidgetKeys {
   static const clearFilterButtonKey = Key('clearFilterButtonKey');
   static const requestTypeFilterTagKey = Key('requestTypeFilterTagKey');
   static const dateFilterTagKey = Key('dateFilterTagKey');
+  static const appBarFilterButtonKey = Key('appBarFilterButtonKey');
 }
