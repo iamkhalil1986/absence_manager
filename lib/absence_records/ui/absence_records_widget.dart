@@ -4,9 +4,8 @@ import 'package:absence_manager/absence_records/bloc/absence_records_bloc.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_event.dart';
 import 'package:absence_manager/absence_records/bloc/absence_records_state.dart';
 import 'package:absence_manager/absence_records/bloc/absence_state.dart';
-import 'package:absence_manager/absence_records/models/absence_records_filter_model.dart';
 import 'package:absence_manager/absence_records/ui/absence_record_detail_widget.dart';
-import 'package:absence_manager/absence_records/ui/absence_records_filter_dialog.dart';
+import 'package:absence_manager/absence_records/ui/absence_records_filter_widget.dart';
 import 'package:absence_manager/core/shared_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,18 +22,13 @@ class AbsenceRecordsWidget extends StatelessWidget {
         title: const Text(AbsenceRecordsStrings.absenceRecords),
         actions: [
           IconButton(
-              onPressed: () async {
-                final filterModel = await Navigator.of(context).push(
-                  MaterialPageRoute<AbsenceRecordsFilterModel>(
-                    builder: (context) => const AbsenceRecordsFilterDialog(),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AbsenceRecordsFilterWidget(),
                     fullscreenDialog: true,
                   ),
                 );
-                if (filterModel != null) {
-                  context.read<AbsenceRecordsBloc>().add(
-                        AbsenceRecordsWithFilterEvent(filterModel: filterModel),
-                      );
-                }
               },
               icon: Icon(Icons.filter_list_alt))
         ],
@@ -252,6 +246,7 @@ class _AbsenceRecordsListItem extends StatelessWidget {
                 status: status,
                 statusColor: statusColor,
                 statusIcon: statusIcon,
+                duration: duration,
               );
             });
       },

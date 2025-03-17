@@ -40,9 +40,16 @@ class AbsenceRecordsBloc
       _sendPaginatedAbsenceRecords(emit);
     } else if (event is AbsenceRecordsWithFilterEvent) {
       _applyFilterAndFetchRecords(event, emit);
+    } else if (event is UpdateRequestTypeFilterEvent) {
+      emit(state.copyWith(requestTypeFilter: event.requestTypeFilter));
+    } else if (event is UpdateDateFilterEvent) {
+      emit(state.copyWith(dateFilter: event.dateFilter));
     } else if (event is ClearDateFilterEvent ||
         event is ClearRequestTypeFilterEvent) {
       _clearFilterAndFetchRecords(emit, event);
+    } else if (event is ClearAllFiltersEvent) {
+      emit(AbsenceRecordsState());
+      _sendPaginatedAbsenceRecords(emit);
     }
   }
 
@@ -87,9 +94,8 @@ class AbsenceRecordsBloc
   void _applyFilterAndFetchRecords(
       AbsenceRecordsWithFilterEvent event, Emitter<AbsenceRecordsState> emit) {
     emit(AbsenceRecordsState().copyWith(
-      requestTypeFilter: event.filterModel?.selectedRequestType,
-      dateFilter: event.filterModel?.selectedDate,
-    ));
+        requestTypeFilter: state.requestTypeFilter,
+        dateFilter: state.dateFilter));
     _sendPaginatedAbsenceRecords(emit);
   }
 

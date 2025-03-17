@@ -1,22 +1,13 @@
 import 'package:absence_manager/absence_records/absence_records_enums.dart';
 import 'package:absence_manager/absence_records/absence_records_strings.dart';
-import 'package:absence_manager/absence_records/models/absence_records_filter_model.dart';
+import 'package:absence_manager/absence_records/bloc/absence_records_bloc.dart';
+import 'package:absence_manager/absence_records/bloc/absence_records_event.dart';
+import 'package:absence_manager/absence_records/bloc/absence_records_state.dart';
 import 'package:absence_manager/core/shared_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AbsenceRecordsFilterDialog extends StatefulWidget {
-  const AbsenceRecordsFilterDialog({super.key});
-
-  @override
-  State<AbsenceRecordsFilterDialog> createState() =>
-      _AbsenceRecordsFilterDialogState();
-}
-
-class _AbsenceRecordsFilterDialogState
-    extends State<AbsenceRecordsFilterDialog> {
-  DateTime? _selectedDate;
-  AbsenceRequestType? _selectedRequestType;
-
+class AbsenceRecordsFilterWidget extends StatelessWidget {
   final dropDownOptions = [
     AbsenceRequestType.vacation,
     AbsenceRequestType.sickness
@@ -24,10 +15,11 @@ class _AbsenceRecordsFilterDialogState
   final _formKey = GlobalKey<FormState>();
   final TextEditingController dateFieldController = TextEditingController();
 
+  AbsenceRecordsFilterWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -35,80 +27,83 @@ class _AbsenceRecordsFilterDialogState
         leading: const IgnorePointer(),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Text(AbsenceRecordsStrings.absenceRecordFilter,
-                      style: theme.textTheme.headlineSmall
-                          ?.copyWith(color: theme.colorScheme.primary)),
-                  SizedBox(height: 24),
-                  _RequestTypeDropdown(
-                    selectedRequestType: _selectedRequestType,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedRequestType = value;
-                      });
-                    },
-                    onValidate: (_) {
-                      if (_selectedRequestType == null &&
-                          _selectedDate == null) {
-                        return AbsenceRecordsStrings.formValidationErrorMessage;
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  _DatePickerField(
-                    controller: dateFieldController,
-                    selectedDate: _selectedDate,
-                    onDateSelected: (date) {
-                      setState(() {
-                        _selectedDate = date;
+        child: BlocBuilder<AbsenceRecordsBloc, AbsenceRecordsState>(
+            builder: (context, state) {
+          dateFieldController.text =
+              SharedUtils.getYearMonthDayFormat(state.dateFilter);
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Text(AbsenceRecordsStrings.absenceRecordFilter,
+                        style: theme.textTheme.headlineSmall
+                            ?.copyWith(color: theme.colorScheme.primary)),
+                    SizedBox(height: 24),
+                    _RequestTypeDropdown(
+                      selectedRequestType: state.requestTypeFilter,
+                      onChanged: (value) {
+                        context.read<AbsenceRecordsBloc>().add(
+                              UpdateRequestTypeFilterEvent(
+                                  requestTypeFilter: value),
+                            );
+                      },
+                      onValidate: (_) {
+                        if (state.requestTypeFilter == null &&
+                            state.dateFilter == null) {
+                          return AbsenceRecordsStrings
+                              .formValidationErrorMessage;
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 24),
+                    _DatePickerField(
+                      controller: dateFieldController,
+                      selectedDate: state.dateFilter,
+                      onDateSelected: (date) {
                         dateFieldController.text =
                             SharedUtils.getYearMonthDayFormat(date);
-                      });
-                    },
-                    onValidate: (_) {
-                      if (_selectedRequestType == null &&
-                          _selectedDate == null) {
-                        return AbsenceRecordsStrings.formValidationErrorMessage;
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  _ActionButtons(
-                    onCancel: () {
-                      Navigator.pop(context);
-                    },
-                    onSubmit: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).pop(
-                          AbsenceRecordsFilterModel(
-                            selectedDate: _selectedDate,
-                            selectedRequestType: _selectedRequestType,
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ],
+                        context.read<AbsenceRecordsBloc>().add(
+                              UpdateDateFilterEvent(dateFilter: date),
+                            );
+                      },
+                      onValidate: (_) {
+                        if (state.requestTypeFilter == null &&
+                            state.dateFilter == null) {
+                          return AbsenceRecordsStrings
+                              .formValidationErrorMessage;
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 24),
+                    _ActionButtons(
+                      onCancel: () {
+                        context
+                            .read<AbsenceRecordsBloc>()
+                            .add(ClearAllFiltersEvent());
+                        Navigator.pop(context);
+                      },
+                      onSubmit: () {
+                        if (_formKey.currentState!.validate()) {
+                          context
+                              .read<AbsenceRecordsBloc>()
+                              .add(AbsenceRecordsWithFilterEvent());
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    dateFieldController.dispose();
   }
 }
 
@@ -230,7 +225,7 @@ class _ActionButtons extends StatelessWidget {
                       Theme.of(context).colorScheme.inverseSurface),
                   foregroundColor: WidgetStateProperty.all(
                       Theme.of(context).colorScheme.onPrimary)),
-              child: const Text(AbsenceRecordsStrings.cancel),
+              child: const Text(AbsenceRecordsStrings.clearFilters),
             ),
           ),
         ),

@@ -8,12 +8,20 @@ class AbsenceRecordsStrings {
   static const confirmed = "Confirmed";
   static const rejected = "Rejected";
 
+  static const name = "Name:";
+  static const requestCategory = "Request Category:";
+  static const duration = "Duration:";
+  static const date = "Date:";
+  static const startDate = "Start Date:";
+  static const endDate = "End Date:";
+  static const membersNote = "Members Note:";
+  static const admittersNote = "Admitters Note:";
+
   static const absenceRecordFilter = "Absence Record Filter";
   static const formValidationErrorMessage = "At least one field must be filled";
   static const absenceRequestType = "Absence Request Type:";
   static const absenceRequestTypeHint = "Select Request Type";
-  static const date = "Date:";
   static const dateHint = "Select Date";
-  static const cancel = "Cancel";
+  static const clearFilters = "Clear Filters";
   static const submit = "Submit";
 }

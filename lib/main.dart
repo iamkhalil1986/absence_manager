@@ -19,8 +19,11 @@ class AbsenceManagerApp extends StatelessWidget {
         title: 'Absence Manager',
         theme: ThemeData(colorScheme: MaterialTheme.lightScheme()),
         home: BlocProvider(
-          create: (_) => AbsenceRecordsBloc()..add(FetchAllRecordsEvent()),
-          child: const AbsenceRecordsWidget(),
-        ));
+            create: (_) => AbsenceRecordsBloc()..add(FetchAllRecordsEvent()),
+            child: Navigator(onGenerateRoute: (routeSettings) {
+              return MaterialPageRoute(
+                  builder: (context) => const AbsenceRecordsWidget(),
+                  maintainState: false);
+            })));
   }
 }

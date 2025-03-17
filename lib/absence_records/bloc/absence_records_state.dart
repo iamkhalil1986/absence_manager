@@ -20,19 +20,15 @@ class AbsenceRecordsState extends Equatable {
       {int? currentAbsenceRecordsCount,
       int? totalAbsenceRecordsCount,
       DateTime? dateFilter,
-      bool clearDateFilter = false,
       AbsenceRequestType? requestTypeFilter,
-      bool clearRequestTypeFilter = false,
       List<AbsenceState>? records}) {
     return AbsenceRecordsState(
         currentAbsenceRecordsCount:
             currentAbsenceRecordsCount ?? this.currentAbsenceRecordsCount,
         totalAbsenceRecordsCount:
             totalAbsenceRecordsCount ?? this.totalAbsenceRecordsCount,
-        dateFilter: clearDateFilter ? null : dateFilter ?? this.dateFilter,
-        requestTypeFilter: clearRequestTypeFilter
-            ? null
-            : requestTypeFilter ?? this.requestTypeFilter,
+        dateFilter: dateFilter ?? this.dateFilter,
+        requestTypeFilter: requestTypeFilter ?? this.requestTypeFilter,
         records: records ?? this.records);
   }
 

@@ -1,3 +1,4 @@
+import 'package:absence_manager/absence_records/absence_records_strings.dart';
 import 'package:absence_manager/absence_records/bloc/absence_state.dart';
 import 'package:absence_manager/core/shared_utils.dart';
 import 'package:flutter/material.dart';
@@ -7,18 +8,19 @@ class AbsenceRecordDetailWidget extends StatelessWidget {
   final Color statusColor;
   final String status;
   final IconData statusIcon;
+  final int duration;
 
   const AbsenceRecordDetailWidget(
       {super.key,
       required this.record,
       required this.statusColor,
       required this.status,
-      required this.statusIcon});
+      required this.statusIcon,
+      required this.duration});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final duration = record.endDate.difference(record.startDate).inDays + 1;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,28 +46,29 @@ class AbsenceRecordDetailWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: statusColor,
               )),
-          _AbsenceRecordDetailItemWidget(label: "Name:", value: record.name),
           _AbsenceRecordDetailItemWidget(
-              label: "Request Category:",
+              label: AbsenceRecordsStrings.name, value: record.name),
+          _AbsenceRecordDetailItemWidget(
+              label: AbsenceRecordsStrings.requestCategory,
               value: record.type.type.capitalizeFirst),
           _AbsenceRecordDetailItemWidget(
-              label: "Duration:",
+              label: AbsenceRecordsStrings.duration,
               value: "$duration ${duration == 1 ? "day" : "days"}"),
           duration == 1
               ? _AbsenceRecordDetailItemWidget(
-                  label: "Date :",
+                  label: AbsenceRecordsStrings.date,
                   value: SharedUtils.getYearMonthDayFormat(record.startDate))
               : Row(
                   children: [
                     Expanded(
                       child: _AbsenceRecordDetailItemWidget(
-                          label: "Start Date:",
+                          label: AbsenceRecordsStrings.startDate,
                           value: SharedUtils.getYearMonthDayFormat(
                               record.startDate)),
                     ),
                     Expanded(
                       child: _AbsenceRecordDetailItemWidget(
-                          label: "End Date:",
+                          label: AbsenceRecordsStrings.endDate,
                           value: SharedUtils.getYearMonthDayFormat(
                               record.endDate)),
                     )
@@ -74,11 +77,13 @@ class AbsenceRecordDetailWidget extends StatelessWidget {
           Visibility(
               visible: record.memberNote.isNotEmpty,
               child: _AbsenceRecordDetailItemWidget(
-                  label: "Member's Note:", value: record.memberNote)),
+                  label: AbsenceRecordsStrings.membersNote,
+                  value: record.memberNote)),
           Visibility(
               visible: record.admitterNote.isNotEmpty,
               child: _AbsenceRecordDetailItemWidget(
-                  label: "Admitter's Note:", value: record.admitterNote))
+                  label: AbsenceRecordsStrings.admittersNote,
+                  value: record.admitterNote))
         ],
       ),
     );
