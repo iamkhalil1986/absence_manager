@@ -139,7 +139,7 @@ Open the Mockoon application you just installed.
 ### 2. Import the Existing `mockoon.json` File
 
 1. In the Mockoon GUI, click on the **"File"** menu at the top.
-2. Select **"Import"**.
+2. Select **"Open local environment"**.
 3. Navigate to the directory containing your `mockoon.json` file, and select it.
 
 Alternatively, you can drag and drop the `mockoon.json` file directly into the Mockoon workspace.
