@@ -2,6 +2,8 @@
 
 Absence Manager is a Flutter app designed to manage and view employee absence records. It leverages the BLoC pattern for state management and integrates with external services to fetch absence and member records. Users can apply filters, view records, and interact with the absence details.
 
+![Demo Application](https://drive.google.com/file/d/1bKc_pNX-sM_nuioNwClMGmKAWYoqStQV/view?usp=sharing)
+
 ## Features
 
 - Fetch employee absence records from the server.
